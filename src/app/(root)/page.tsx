@@ -33,11 +33,11 @@ const Home = () => {
         id="events"
         className="wrapper my-8 flex flex-col gap-8 md:gap-12"
       >
-        <h2 className="h2-bold">
+        <h2 className="h2-bold text-left ml-[10%]">
           Trust by <br /> Thousands of Events
         </h2>
-        Search<br></br>
-        CategoryFilter
+        <input type="search" placeholder="search " className="border-2 border-black"/>
+        <input type="text" placeholder="Filter event" className="border-2 border-black"/>
       </section>
     </>
   );

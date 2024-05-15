@@ -1,4 +1,6 @@
 "use client";
+
+
 import { HeaderLinks } from "@/constants";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -12,9 +14,13 @@ const Navitem = () => {
         const isActive = pathname = link.route;
         return (
           <li
-            key={link.route}
-            className={`${isActive && "text-primary-500"}flex-center text-base font-medium`}
-          ><Link href={link.route}>{link.label}</Link></li>
+          key={link.route}
+          className={`${
+            isActive && 'text-primary-500'
+          } flex-center p-medium-16 whitespace-nowrap`}
+        >
+          <Link href={link.route}>{link.label}</Link>
+        </li>
         );
       })}
     </ul>
