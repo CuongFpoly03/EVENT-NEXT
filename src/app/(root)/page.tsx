@@ -1,9 +1,24 @@
+import CategoryFillter from "@/components/events/CategoryFillter";
+import Collection from "@/components/events/Collection";
+import Search from "@/components/events/Search";
 import { Button } from "@/components/ui/button";
+import { getAllEvents } from "@/lib/actions/event.action";
+import { SearchParamProps } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const Home = () => {
+const Home = async ({ searchParams }: SearchParamProps) => {
+  const page = Number(searchParams?.page) || 1;
+  const searchText = (searchParams?.query as string) || '';
+  const category = (searchParams?.category as string) || '';
+  const events = await getAllEvents({
+    query: searchText,
+    category,
+    page,
+    limit: 3,
+  });
+  // console.log(events);
   return (
     <>
       <section className="bg-primary-50 py-5  bg-dotted-pattern bg-contain md:py-10">
@@ -33,11 +48,23 @@ const Home = () => {
         id="events"
         className="wrapper my-8 flex flex-col gap-8 md:gap-12"
       >
-        <h2 className="h2-bold text-left ml-[10%]">
+        <h2 className="h2-bold">
           Trust by <br /> Thousands of Events
         </h2>
-        <input type="search" placeholder="search " className="border-2 border-black"/>
-        <input type="text" placeholder="Filter event" className="border-2 border-black"/>
+
+        <div className="flex w-full flex-col gap-5 md:flex-row">
+          <CategoryFillter />
+          <Search />
+        </div>
+        <Collection
+          data={events?.data}
+          emptyTitle="No Events Found"
+          emptyStateSubtext="Come back later"
+          collectionType="All_Events"
+          limit={6}
+          page={page}
+          totalPages={events?.totalPages}
+        />
       </section>
     </>
   );

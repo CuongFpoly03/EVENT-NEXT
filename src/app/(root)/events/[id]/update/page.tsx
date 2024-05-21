@@ -1,19 +1,34 @@
 import FormEvent from "@/components/events/FormEvent";
-import { auth } from "@clerk/nextjs/server";
+import { getEventById } from "@/lib/actions/event.action";
+import { useSession } from "next-auth/react";
 import React from "react";
 
-const Update = () => {
-  const {sessionClaims} = auth();
-  const userId = sessionClaims?.userId as string;
+type UpdateEventProps = {
+  params: {
+    id: string;
+  };
+};
+
+const Update = async ({ params: { id } }: UpdateEventProps) => {
+  // const {data: session} = useSession();
+  // console.log(session);
+  const userId = "6644ba3155363a19efb437b3"// Lấy userId của người dùng hiện tại
+  const event = await getEventById(id);
   return (
     <>
       <section className="bg-primary-50 bg-dotted-pattern bg-cover bg-center py-5 md:py-10">
         <h3 className="wrapper h3-bold text-center sm:text-left">
-          Create event
+          Update Event
         </h3>
       </section>
+
       <div className="wrapper my-8">
-        <FormEvent userId = {userId} type="Update" />
+        <FormEvent
+          type="Update"
+          event={event}
+          eventId={event._id}
+          userId={userId}
+        />
       </div>
     </>
   );

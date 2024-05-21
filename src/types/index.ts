@@ -1,17 +1,41 @@
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string; // thêm thuộc tính id
+      name?: string | null;
+      email?: string | null;
+      image?: string | null;
+    };
+  }
+}
+
 export type CreateUserParams = {
-  clerkId: string;
   firstName: string;
   lastName: string;
   username: string;
   email: string;
-  photo: string;
+  photo?: string;
+};
+
+export type Signup = {
+  firstName: string;
+  lastName: string;
+  username: string;
+  email: string;
+  password: string
+};
+
+export type Signin = {
+  email: string;
+  password: string;
 };
 
 export type UpdateUserParams = {
   firstName: string;
   lastName: string;
   username: string;
-  photo: string;
+  photo?: string;
 };
 
 // EVENT PARAMS

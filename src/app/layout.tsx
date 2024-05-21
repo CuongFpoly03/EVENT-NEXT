@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/toaster";
+import { getServerSession } from "next-auth";
+import SessionProvider from "@/utils/SessionProvider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -18,18 +19,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession();
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={poppins.variable}>
-          <Toaster/>
-          {children}</body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <body className={poppins.variable}>
+        <SessionProvider session={session}>
+          <Toaster />
+          {children}
+        </SessionProvider>
+      </body>
+    </html>
   );
 }

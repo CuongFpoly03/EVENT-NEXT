@@ -10,10 +10,9 @@ import { handleError } from "@/lib/utils";
 import { CreateUserParams, UpdateUserParams } from "@/types";
 import { connectDB } from "../database";
 
-export async function createUser(user: any) {
+export async function createUser(user: CreateUserParams) {
   try {
     await connectDB();
-
     const newUser = await User.create(user);
     return JSON.parse(JSON.stringify(newUser));
   } catch (error) {
@@ -33,7 +32,7 @@ export async function getUserById(userId: string) {
   }
 }
 
-export async function updateUser(clerkId: string, user: any) {
+export async function updateUser(clerkId: string, user: UpdateUserParams) {
   try {
     await connectDB();
 

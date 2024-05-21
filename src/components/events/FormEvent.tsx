@@ -73,7 +73,7 @@ const FormEvent = ({ userId, type, event, eventId }: EventProps) => {
         if (newEvent) {
           form.reset();
           toast({
-            description: "Your message has been sent !",
+            description: "Add successfully !",
           });
           router.push(`/events/${newEvent._id}`);
         }
@@ -96,6 +96,9 @@ const FormEvent = ({ userId, type, event, eventId }: EventProps) => {
 
         if (updatedEvent) {
           form.reset();
+          toast({
+            description: "Update successfully !",
+          });
           router.push(`/events/${updatedEvent._id}`);
         }
       } catch (error) {
